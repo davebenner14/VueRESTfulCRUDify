@@ -1,62 +1,43 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import axios from "axios";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    dataList: [],
+    data: [
+      // initial data here
+    ],
   },
   mutations: {
     SET_DATA(state, data) {
-      state.dataList = data;
+      state.data = data;
     },
-    ADD_DATA(state, data) {
-      state.dataList.push(data);
+    ADD_DATA(state, dataItem) {
+      state.data.push(dataItem);
     },
-    UPDATE_DATA(state, updatedData) {
-      const index = state.dataList.findIndex(
-        (data) => data.id === updatedData.id
-      );
+    EDIT_DATA(state, dataItem) {
+      const index = state.data.findIndex((item) => item.id === dataItem.id);
       if (index !== -1) {
-        state.dataList.splice(index, 1, updatedData);
+        state.data.splice(index, 1, dataItem);
       }
     },
-    DELETE_DATA(state, dataId) {
-      state.dataList = state.dataList.filter((data) => data.id !== dataId);
+    DELETE_DATA(state, dataItem) {
+      const index = state.data.findIndex((item) => item.id === dataItem.id);
+      if (index !== -1) {
+        state.data.splice(index, 1);
+      }
     },
   },
   actions: {
-    async fetchData({ commit }) {
-      const response = await axios.get("/api/data");
-      commit("SET_DATA", response.data);
+    addData({ commit }, dataItem) {
+      commit("ADD_DATA", dataItem);
     },
-    async addData({ commit }, data) {
-      const response = await axios.post("/api/data", data);
-      commit("ADD_DATA", response.data);
+    editData({ commit }, dataItem) {
+      commit("EDIT_DATA", dataItem);
     },
-    async updateData({ commit }, updatedData) {
-      const response = await axios.put(
-        `/api/data/${updatedData.id}`,
-        updatedData
-      );
-      commit("UPDATE_DATA", response.data);
-    },
-    async deleteData({ commit }, id) {
-      await axios.delete(`/api/data/${id}`);
-      commit("DELETE_DATA", id);
-    },
-  },
-  getters: {
-    dataList: (state) => state.dataList,
-    filteredData: (state) => (searchTerm) => {
-      if (!searchTerm) {
-        return state.dataList;
-      }
-      return state.dataList.filter((data) =>
-        data.title.toLowerCase().includes(searchTerm.toLowerCase())
-      );
+    deleteData({ commit }, dataItem) {
+      commit("DELETE_DATA", dataItem);
     },
   },
 });
