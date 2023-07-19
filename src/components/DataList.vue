@@ -12,8 +12,10 @@
       <tbody>
         <tr v-for="item in dataList" :key="item.id">
           <td>
-            <button @click="editItem(item)">Edit</button>
-            <button @click="deleteItem(item)">Delete</button>
+            <i class="material-icons orange600" @click="editItem(item)">edit</i>
+            <i class="material-icons red600" @click="deleteItem(item)"
+              >delete</i
+            >
           </td>
           <td>{{ item.name }}</td>
           <td>{{ item.description }}</td>
@@ -84,3 +86,16 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.material-icons {
+  cursor: pointer;
+  font-size: 24px;
+}
+.material-icons.orange600 {
+  color: #fb8c00;
+}
+.material-icons.red600 {
+  color: #e53935;
+}
+</style>
