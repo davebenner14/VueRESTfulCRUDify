@@ -13,3 +13,61 @@ td {
 button {
   margin-right: 10px;
 }
+
+/* Below is styling for Modal */
+
+.modal {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 30px;
+  margin: 0 auto;
+  border-radius: 5px;
+}
+
+.modal-title, /* Add this new class */
+.label {
+  font-weight: bold;
+  width: 100%;
+  text-align: left;
+  padding: 10px 0;
+}
+
+.input-name,
+.input-description {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid black;
+  resize: none;
+  padding: 10px 0;
+  padding-left: 10px;
+  box-sizing: border-box;
+}
+
+.input-description {
+  border: none;
+  border: 1px solid #000;
+  padding: 5px;
+  border-radius: 4px;
+  height: 100px;
+  box-sizing: border-box;
+}
+
+.buttons {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  padding-top: 20px;
+  gap: 10px;
+}
+
+.buttons button {
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.buttons button:last-child {
+  color: orange;
+}
