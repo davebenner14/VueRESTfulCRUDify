@@ -1,18 +1,17 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import { data } from "./Data"; // Import the data from Data.js
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    data: [
-      // initial data here
-    ],
+    data: data, // Initialize the state with the imported data
+  },
+  getters: {
+    dataList: (state) => state.data,
   },
   mutations: {
-    SET_DATA(state, data) {
-      state.data = data;
-    },
     ADD_DATA(state, dataItem) {
       state.data.push(dataItem);
     },

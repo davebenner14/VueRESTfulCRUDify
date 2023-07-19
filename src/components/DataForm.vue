@@ -18,14 +18,14 @@ export default {
   },
   data() {
     return {
-      formData: this.editItemData,
+      formData: { ...this.editItemData },
     };
   },
   methods: {
-    ...mapActions(["addData", "updateData"]),
+    ...mapActions(["addData", "editData"]),
     submitForm() {
-      if (this.formData.id) {
-        this.updateData(this.formData);
+      if (Object.keys(this.formData).length) {
+        this.editData(this.formData);
       } else {
         this.addData(this.formData);
       }
@@ -35,7 +35,7 @@ export default {
   watch: {
     editItemData: {
       handler(newVal) {
-        this.formData = newVal;
+        this.formData = { ...newVal };
       },
       deep: true,
     },

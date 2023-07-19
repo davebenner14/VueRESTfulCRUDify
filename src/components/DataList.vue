@@ -2,7 +2,7 @@
   <div>
     <div v-for="item in dataList" :key="item.id">
       <p>{{ item.name }}</p>
-      <button @click="deleteItem(item.id)">Delete</button>
+      <button @click="deleteItem(item)">Delete</button>
       <button @click="editItem(item)">Edit</button>
     </div>
   </div>
@@ -17,16 +17,13 @@ export default {
     ...mapGetters(["dataList"]),
   },
   methods: {
-    ...mapActions(["deleteData", "fetchData"]),
-    deleteItem(id) {
-      this.deleteData(id);
+    ...mapActions(["deleteData"]),
+    deleteItem(item) {
+      this.deleteData(item);
     },
     editItem(item) {
       this.$emit("edit-item", item);
     },
-  },
-  created() {
-    this.fetchData();
   },
 };
 </script>
