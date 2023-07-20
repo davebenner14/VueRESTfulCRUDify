@@ -10,6 +10,7 @@
   "dependencies": {
     "axios": "^1.4.0",
     "core-js": "^3.8.3",
+    "faker": "^5.5.3",
     "vue": "^2.6.14",
     "vue-js-modal": "^2.0.1",
     "vue-router": "^3.6.5",

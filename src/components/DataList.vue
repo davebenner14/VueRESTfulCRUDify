@@ -3,6 +3,7 @@
     <table>
       <thead>
         <tr>
+          <th></th>
           <th>Actions</th>
           <th>Name</th>
           <th>Description</th>
@@ -11,6 +12,9 @@
       </thead>
       <tbody>
         <tr v-for="item in dataList" :key="item.id">
+          <td>
+            <input type="checkbox" v-model="selectedItems" :value="item.id" />
+          </td>
           <td>
             <i class="material-icons orange600" @click="editItem(item)">edit</i>
             <i class="material-icons red600" @click="deleteItem(item)"
@@ -65,6 +69,7 @@ export default {
   data() {
     return {
       formData: {},
+      selectedItems: [],
     };
   },
   computed: {
