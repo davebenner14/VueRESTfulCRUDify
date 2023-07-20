@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="search-bar">
     <input v-model="searchTerm" type="text" placeholder="Search" />
   </div>
 </template>
@@ -19,3 +19,10 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.search-bar {
+  padding: 20px;
+  margin-bottom: 10px;
+}
+</style>

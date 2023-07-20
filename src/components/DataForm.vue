@@ -1,8 +1,5 @@
 <template>
-  <div>
-    <input v-model="formData.name" type="text" placeholder="Name" />
-    <button @click="submitForm">Submit</button>
-  </div>
+  <div></div>
 </template>
 
 <script>

@@ -1,5 +1,7 @@
 <template>
   <div>
+    <SearchBar @search="performSearch" />
+
     <table>
       <thead>
         <tr>
@@ -81,13 +83,18 @@
 </template>
 
 <script>
+import SearchBar from "./SearchBar.vue";
 import "./DataList.css";
 import { mapActions, mapGetters } from "vuex";
 
 export default {
+  components: {
+    SearchBar,
+  },
   name: "DataList",
   data() {
     return {
+      searchTerm: "",
       formData: {},
       selectedItems: [],
       currentPage: 1,
@@ -97,13 +104,27 @@ export default {
   },
   computed: {
     ...mapGetters(["dataList"]),
+    filteredDataList() {
+      if (!this.searchTerm) {
+        return this.dataList;
+      }
+      return this.dataList.filter(
+        (item) =>
+          item.name.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+          item.description
+            .toLowerCase()
+            .includes(this.searchTerm.toLowerCase()) ||
+          item.id.toString().includes(this.searchTerm)
+      );
+    },
+
     pagedDataList() {
       const start = (this.currentPage - 1) * this.itemsPerPage;
       const end = start + this.itemsPerPage;
-      return this.dataList.slice(start, end);
+      return this.filteredDataList.slice(start, end);
     },
     totalPageCount() {
-      return Math.ceil(this.dataList.length / this.itemsPerPage);
+      return Math.ceil(this.filteredDataList.length / this.itemsPerPage);
     },
     startRecord() {
       return (this.currentPage - 1) * this.itemsPerPage + 1;
@@ -112,11 +133,14 @@ export default {
       return Math.min(this.currentPage * this.itemsPerPage, this.totalRecords);
     },
     totalRecords() {
-      return this.dataList.length;
+      return this.filteredDataList.length;
     },
   },
   methods: {
     ...mapActions(["deleteData", "editData"]),
+    performSearch(searchTerm) {
+      this.searchTerm = searchTerm;
+    },
     deleteItem(item) {
       this.deleteData(item);
     },
