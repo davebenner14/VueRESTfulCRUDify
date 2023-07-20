@@ -3,7 +3,7 @@
     <table>
       <thead>
         <tr>
-          <th></th>
+          <th><input type="checkbox" v-model="selectAll" /></th>
           <th>Actions</th>
           <th>Name</th>
           <th>Description</th>
@@ -11,7 +11,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="item in dataList" :key="item.id">
+        <tr v-for="item in pagedDataList" :key="item.id">
           <td>
             <input type="checkbox" v-model="selectedItems" :value="item.id" />
           </td>
@@ -29,6 +29,26 @@
         </tr>
       </tbody>
     </table>
+
+    <div>
+      Rows per page:
+      <select v-model="itemsPerPage">
+        <option value="10">10</option>
+        <option value="20">20</option>
+        <option value="30">30</option>
+        <option value="40">40</option>
+      </select>
+      <div>
+        Records {{ startRecord }} - {{ endRecord }} from
+        {{ totalRecords }} Page: {{ currentPage }}
+      </div>
+      <div>
+        <button @click="goToFirstPage">|&lt;</button>
+        <button @click="goToPreviousPage">&lt;</button>
+        <button @click="goToNextPage">&gt;</button>
+        <button @click="goToLastPage">&gt;|</button>
+      </div>
+    </div>
 
     <modal name="editForm" :height="300" class="modal">
       <h2>Task</h2>
@@ -70,10 +90,30 @@ export default {
     return {
       formData: {},
       selectedItems: [],
+      currentPage: 1,
+      itemsPerPage: 20,
+      selectAll: false,
     };
   },
   computed: {
     ...mapGetters(["dataList"]),
+    pagedDataList() {
+      const start = (this.currentPage - 1) * this.itemsPerPage;
+      const end = start + this.itemsPerPage;
+      return this.dataList.slice(start, end);
+    },
+    totalPageCount() {
+      return Math.ceil(this.dataList.length / this.itemsPerPage);
+    },
+    startRecord() {
+      return (this.currentPage - 1) * this.itemsPerPage + 1;
+    },
+    endRecord() {
+      return Math.min(this.currentPage * this.itemsPerPage, this.totalRecords);
+    },
+    totalRecords() {
+      return this.dataList.length;
+    },
   },
   methods: {
     ...mapActions(["deleteData", "editData"]),
@@ -87,6 +127,34 @@ export default {
     submitForm() {
       this.editData(this.formData);
       this.$modal.hide("editForm");
+    },
+    goToFirstPage() {
+      this.currentPage = 1;
+    },
+    goToPreviousPage() {
+      if (this.currentPage > 1) {
+        this.currentPage--;
+      }
+    },
+    goToNextPage() {
+      if (this.currentPage < this.totalPageCount) {
+        this.currentPage++;
+      }
+    },
+    goToLastPage() {
+      this.currentPage = this.totalPageCount;
+    },
+  },
+  watch: {
+    selectAll(newValue) {
+      this.selectedItems = newValue
+        ? this.pagedDataList.map((item) => item.id)
+        : [];
+    },
+    selectedItems(newValue, oldValue) {
+      if (newValue.length !== oldValue.length) {
+        this.selectAll = newValue.length === this.pagedDataList.length;
+      }
     },
   },
 };
@@ -102,5 +170,9 @@ export default {
 }
 .material-icons.red600 {
   color: #e53935;
+}
+
+input[type="checkbox"] {
+  transform: scale(1.5);
 }
 </style>
