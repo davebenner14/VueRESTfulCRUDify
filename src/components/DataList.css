@@ -14,8 +14,6 @@ button {
   margin-right: 10px;
 }
 
-/* Below is styling for Modal */
-
 .modal {
   display: flex;
   flex-direction: column;
@@ -26,7 +24,7 @@ button {
   border-radius: 5px;
 }
 
-.modal-title, /* Add this new class */
+.modal-title,
 .label {
   font-weight: bold;
   width: 100%;
@@ -70,4 +68,35 @@ button {
 
 .buttons button:last-child {
   color: orange;
+}
+
+@media (max-width: 600px) {
+  th,
+  td {
+    padding: 10px;
+  }
+
+  .modal {
+    padding: 20px;
+  }
+
+  .modal-title,
+  .label {
+    padding: 5px 0;
+  }
+
+  .input-name,
+  .input-description {
+    padding: 5px 0;
+  }
+
+  .buttons {
+    padding-top: 10px;
+  }
+}
+
+@media (max-width: 400px) {
+  .input-description {
+    height: 80px;
+  }
 }

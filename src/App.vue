@@ -59,4 +59,38 @@ export default {
   line-height: 1.6;
   text-align: justify;
 }
+
+/* Responsive Design Media Queries */
+
+@media (max-width: 900px) {
+  .title {
+    font-size: 2em;
+  }
+
+  .description {
+    font-size: 1em;
+    max-width: 600px;
+  }
+}
+
+@media (max-width: 600px) {
+  #app {
+    margin-top: 30px;
+  }
+
+  .title {
+    font-size: 1.5em;
+  }
+
+  .description {
+    font-size: 0.9em;
+    max-width: 400px;
+  }
+}
+
+@media (max-width: 400px) {
+  .description {
+    max-width: 300px;
+  }
+}
 </style>
