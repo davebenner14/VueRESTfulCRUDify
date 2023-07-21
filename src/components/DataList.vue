@@ -17,7 +17,10 @@
           <td>
             <input type="checkbox" v-model="selectedItems" :value="item.id" />
           </td>
-          <td>
+          <td class="icon-container">
+            <i class="material-icons lightblue" @click="addItem"
+              >add_circle_outline</i
+            >
             <i class="material-icons orange600" @click="editItem(item)">edit</i>
             <i class="material-icons red600" @click="deleteItem(item)"
               >delete</i
@@ -39,12 +42,14 @@
     />
 
     <EditForm :formData="formData" />
+    <AddForm />
   </div>
 </template>
 
 <script>
 import SearchBar from "./SearchBar.vue";
 import EditForm from "./EditForm.vue";
+import AddForm from "./AddForm.vue";
 import DataPagination from "./DataPagination.vue";
 import "./DataList.css";
 import { mapActions, mapGetters } from "vuex";
@@ -53,6 +58,7 @@ export default {
   components: {
     SearchBar,
     EditForm,
+    AddForm,
     DataPagination,
   },
   name: "DataList",
@@ -102,6 +108,9 @@ export default {
       this.formData = { ...item };
       this.$modal.show("editForm");
     },
+    addItem() {
+      this.$modal.show("addForm");
+    },
   },
   watch: {
     selectAll(newValue) {
@@ -129,7 +138,13 @@ export default {
 .material-icons.red600 {
   color: #e53935;
 }
-
+.material-icons.lightblue {
+  color: #add8e6; /* Light blue color */
+}
+.icon-container {
+  display: flex;
+  justify-content: space-between;
+}
 input[type="checkbox"] {
   transform: scale(1.5);
 }
