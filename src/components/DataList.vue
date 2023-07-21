@@ -52,44 +52,20 @@
       </div>
     </div>
 
-    <modal name="editForm" :height="300" class="modal">
-      <h2>Task</h2>
-
-      <form @submit.prevent="submitForm" class="form">
-        <label class="label">
-          Name:
-          <textarea
-            v-model="formData.name"
-            class="input-name"
-            rows="1"
-          ></textarea>
-        </label>
-
-        <label class="label">
-          Description:
-          <textarea
-            v-model="formData.description"
-            class="input-description"
-          ></textarea>
-        </label>
-
-        <div class="buttons">
-          <button type="button" @click="$modal.hide('editForm')">Close</button>
-          <button type="submit">Modify</button>
-        </div>
-      </form>
-    </modal>
+    <EditForm :formData="formData" />
   </div>
 </template>
 
 <script>
 import SearchBar from "./SearchBar.vue";
+import EditForm from "./EditForm.vue";
 import "./DataList.css";
 import { mapActions, mapGetters } from "vuex";
 
 export default {
   components: {
     SearchBar,
+    EditForm,
   },
   name: "DataList",
   data() {
@@ -117,7 +93,6 @@ export default {
           item.id.toString().includes(this.searchTerm)
       );
     },
-
     pagedDataList() {
       const start = (this.currentPage - 1) * this.itemsPerPage;
       const end = start + this.itemsPerPage;
@@ -137,7 +112,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions(["deleteData", "editData"]),
+    ...mapActions(["deleteData"]),
     performSearch(searchTerm) {
       this.searchTerm = searchTerm;
     },
@@ -147,10 +122,6 @@ export default {
     editItem(item) {
       this.formData = { ...item };
       this.$modal.show("editForm");
-    },
-    submitForm() {
-      this.editData(this.formData);
-      this.$modal.hide("editForm");
     },
     goToFirstPage() {
       this.currentPage = 1;
