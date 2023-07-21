@@ -53,7 +53,8 @@ npm run serve
 
 The Data Management Component is a Vue.js-based solution designed to facilitate basic data management tasks for a collection of items. The component allows users to perform CRUD operations, namely Create, Read, Update, and Delete, on the data collection. It maintains the data in an array named data and employs a nextId variable to ensure each newly added item is assigned a unique identifier. The component offers three essential methods: addData, editData, and deleteData. The addData method permits users to add new items to the array, generating a unique ID for each entry. Meanwhile, the editData method allows for updating existing items based on their ID, and the deleteData method enables the removal of items from the array. For detailed implementation, users can integrate the component into their Vue.js applications, adapting the HTML structure and functionality as required to effectively manage their data collection.
 
-```<template>
+```
+<template>
   <div>
     <!-- Your template code here -->
   </div>
