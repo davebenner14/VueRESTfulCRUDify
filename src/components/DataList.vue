@@ -2,38 +2,16 @@
   <div>
     <SearchBar @search="performSearch" />
 
-    <table>
-      <thead>
-        <tr>
-          <th><input type="checkbox" v-model="selectAll" /></th>
-          <th>Actions</th>
-          <th>Name</th>
-          <th>Description</th>
-          <th>Active</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="item in pagedDataList" :key="item.id">
-          <td>
-            <input type="checkbox" v-model="selectedItems" :value="item.id" />
-          </td>
-          <td class="icon-container">
-            <i class="material-icons lightblue" @click="addItem"
-              >add_circle_outline</i
-            >
-            <i class="material-icons orange600" @click="editItem(item)">edit</i>
-            <i class="material-icons red600" @click="deleteItem(item)"
-              >delete</i
-            >
-          </td>
-          <td>{{ item.name }}</td>
-          <td>{{ item.description }}</td>
-          <td>
-            <input type="checkbox" :checked="item.active" disabled />
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <DataTable
+      :pagedDataList="pagedDataList"
+      :selectAll="selectAll"
+      :selectedItems="selectedItems"
+      @update:selectAll="selectAll = $event"
+      @update:selectedItems="selectedItems = $event"
+      @edit-item="editItem"
+      @delete-item="deleteItem"
+      @add-item="addItem"
+    />
 
     <DataPagination
       :currentPage.sync="currentPage"
@@ -48,6 +26,7 @@
 
 <script>
 import SearchBar from "./SearchBar.vue";
+import DataTable from "./DataTable.vue";
 import EditForm from "./EditForm.vue";
 import AddForm from "./AddForm.vue";
 import DataPagination from "./DataPagination.vue";
@@ -57,6 +36,7 @@ import { mapActions, mapGetters } from "vuex";
 export default {
   components: {
     SearchBar,
+    DataTable,
     EditForm,
     AddForm,
     DataPagination,
@@ -126,26 +106,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.material-icons {
-  cursor: pointer;
-  font-size: 24px;
-}
-.material-icons.orange600 {
-  color: #fb8c00;
-}
-.material-icons.red600 {
-  color: #e53935;
-}
-.material-icons.lightblue {
-  color: #add8e6; /* Light blue color */
-}
-.icon-container {
-  display: flex;
-  justify-content: space-between;
-}
-input[type="checkbox"] {
-  transform: scale(1.5);
-}
-</style>
