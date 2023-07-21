@@ -1,20 +1,17 @@
 <template>
   <div id="app">
-    <SearchBar />
     <DataForm />
     <DataList />
   </div>
 </template>
 
 <script>
-import SearchBar from "./components/SearchBar.vue";
 import DataForm from "./components/DataForm.vue";
 import DataList from "./components/DataList.vue";
 
 export default {
   name: "App",
   components: {
-    SearchBar,
     DataForm,
     DataList,
   },
