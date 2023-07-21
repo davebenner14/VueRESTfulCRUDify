@@ -25,19 +25,30 @@
           />
         </td>
         <td>
-          <i class="material-icons lightblue" @click="$emit('add-item')"
+          <i
+            class="material-icons lightblue"
+            @click="$emit('add-item')"
+            title="Add"
             >add_circle</i
           >
-          <i class="material-icons orange600" @click="$emit('edit-item', item)"
+          <i
+            class="material-icons orange600"
+            @click="$emit('edit-item', item)"
+            title="Edit"
             >edit</i
           >
-          <i class="material-icons red600" @click="$emit('delete-item', item)"
+          <i
+            class="material-icons red600"
+            @click="$emit('delete-item', item)"
+            title="Delete"
             >delete</i
           >
-          <i class="material-icons green600" @click="$emit('show-form', item)"
+          <i
+            class="material-icons green600"
+            @click="$emit('show-form', item)"
+            title="Show"
             >sms</i
           >
-          <!-- Added line -->
         </td>
         <td>{{ item.name }}</td>
         <td>{{ item.description }}</td>
