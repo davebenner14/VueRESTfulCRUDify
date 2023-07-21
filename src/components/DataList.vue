@@ -11,6 +11,7 @@
       @edit-item="editItem"
       @delete-item="deleteItem"
       @add-item="addItem"
+      @show-form="showForm"
     />
 
     <DataPagination
@@ -21,6 +22,7 @@
 
     <EditForm :formData="formData" />
     <AddForm />
+    <ShowForm :item="selectedItem" />
   </div>
 </template>
 
@@ -29,6 +31,7 @@ import SearchBar from "./SearchBar.vue";
 import DataTable from "./DataTable.vue";
 import EditForm from "./EditForm.vue";
 import AddForm from "./AddForm.vue";
+import ShowForm from "./ShowForm.vue";
 import DataPagination from "./DataPagination.vue";
 import "./DataList.css";
 import { mapActions, mapGetters } from "vuex";
@@ -39,6 +42,7 @@ export default {
     DataTable,
     EditForm,
     AddForm,
+    ShowForm,
     DataPagination,
   },
   name: "DataList",
@@ -46,6 +50,7 @@ export default {
     return {
       searchTerm: "",
       formData: {},
+      selectedItem: null,
       selectedItems: [],
       currentPage: 1,
       itemsPerPage: 20,
@@ -90,6 +95,10 @@ export default {
     },
     addItem() {
       this.$modal.show("addForm");
+    },
+    showForm(item) {
+      this.selectedItem = item;
+      this.$modal.show("showForm");
     },
   },
   watch: {

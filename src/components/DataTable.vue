@@ -25,15 +25,19 @@
           />
         </td>
         <td>
+          <i class="material-icons lightblue" @click="$emit('add-item')"
+            >add_circle</i
+          >
           <i class="material-icons orange600" @click="$emit('edit-item', item)"
             >edit</i
           >
           <i class="material-icons red600" @click="$emit('delete-item', item)"
             >delete</i
           >
-          <i class="material-icons lightblue" @click="$emit('add-item')"
-            >add_circle</i
+          <i class="material-icons green600" @click="$emit('show-form', item)"
+            >sms</i
           >
+          <!-- Added line -->
         </td>
         <td>{{ item.name }}</td>
         <td>{{ item.description }}</td>
@@ -89,7 +93,10 @@ export default {
   color: #e53935;
 }
 .material-icons.lightblue {
-  color: #add8e6; /* Light blue color */
+  color: #add8e6;
+}
+.material-icons.green600 {
+  color: #4caf50;
 }
 .icon-container {
   display: flex;
