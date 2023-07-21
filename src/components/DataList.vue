@@ -32,25 +32,11 @@
       </tbody>
     </table>
 
-    <div>
-      Rows per page:
-      <select v-model="itemsPerPage">
-        <option value="10">10</option>
-        <option value="20">20</option>
-        <option value="30">30</option>
-        <option value="40">40</option>
-      </select>
-      <div>
-        Records {{ startRecord }} - {{ endRecord }} from
-        {{ totalRecords }} Page: {{ currentPage }}
-      </div>
-      <div>
-        <button @click="goToFirstPage">|&lt;</button>
-        <button @click="goToPreviousPage">&lt;</button>
-        <button @click="goToNextPage">&gt;</button>
-        <button @click="goToLastPage">&gt;|</button>
-      </div>
-    </div>
+    <DataPagination
+      :currentPage.sync="currentPage"
+      :itemsPerPage.sync="itemsPerPage"
+      :totalRecords="totalRecords"
+    />
 
     <EditForm :formData="formData" />
   </div>
@@ -59,6 +45,7 @@
 <script>
 import SearchBar from "./SearchBar.vue";
 import EditForm from "./EditForm.vue";
+import DataPagination from "./DataPagination.vue";
 import "./DataList.css";
 import { mapActions, mapGetters } from "vuex";
 
@@ -66,6 +53,7 @@ export default {
   components: {
     SearchBar,
     EditForm,
+    DataPagination,
   },
   name: "DataList",
   data() {
@@ -98,15 +86,6 @@ export default {
       const end = start + this.itemsPerPage;
       return this.filteredDataList.slice(start, end);
     },
-    totalPageCount() {
-      return Math.ceil(this.filteredDataList.length / this.itemsPerPage);
-    },
-    startRecord() {
-      return (this.currentPage - 1) * this.itemsPerPage + 1;
-    },
-    endRecord() {
-      return Math.min(this.currentPage * this.itemsPerPage, this.totalRecords);
-    },
     totalRecords() {
       return this.filteredDataList.length;
     },
@@ -122,22 +101,6 @@ export default {
     editItem(item) {
       this.formData = { ...item };
       this.$modal.show("editForm");
-    },
-    goToFirstPage() {
-      this.currentPage = 1;
-    },
-    goToPreviousPage() {
-      if (this.currentPage > 1) {
-        this.currentPage--;
-      }
-    },
-    goToNextPage() {
-      if (this.currentPage < this.totalPageCount) {
-        this.currentPage++;
-      }
-    },
-    goToLastPage() {
-      this.currentPage = this.totalPageCount;
     },
   },
   watch: {
